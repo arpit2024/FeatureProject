@@ -1,7 +1,7 @@
 So to implement selfProductService we get question how my service class will be able to implement
 the methods-> via database
 
-So to talk to database service class needs a middle layer Called Repository.
+So to talk to database-> service class needs a middle layer Called Repository.
 So since we are using JPA we will use Interface- Reason is detailed in "Spring Data JPA Notes"
 These are also called as 'dao'
 DAO-DataAccessObject focuses on abstracting and encapsulating the interaction with a data

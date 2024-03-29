@@ -1,6 +1,6 @@
 getSingleProduct()- Implementing First API Method
 
-Do i have a object of Product repository>-> YES
+Do i have a object of Product repository--> YES
 
 why do i need Product Repository and product from it?
 -> to get the product from the database and to return the product to the user
@@ -32,6 +32,10 @@ if i try to access the null say  product.getTitle() then it will throw an except
 
 *) So we need to do things that can be checked at compile time,
 -> so instead of just returning the Product object we can return Optional<Product> object
+
+<OPTIONAL> role is to check if the product is present or not in the database and if it is present
+then it will return the product object and if it is not present then it will return empty
+
 write this method
 
 1) in Product Repository

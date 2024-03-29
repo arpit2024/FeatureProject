@@ -1,11 +1,12 @@
-In our 1st part of project we implemented api to call 3rd party APi
+
+In our 1st part of project we implemented api(Methods) to call 3rd party APi
 i.e we used FakeStore Api to get products and categories details from DB
 
-For this reason we used interface in our Service package so that we can implement it
+For this reason we used interface in our Service package so that we can implement it in other class
 whenever required, now in service package we will create another class- SelfProductService
 
-In this we will implement our own api to get products and categories details from DB
-as soon as we implement all interface methods in selfProductService class and run casually
+In this we will implement our own api to get products and categories details from DataBase using JPA Repository
+As soon as we implement all interface methods in selfProductService class and run casually
 we will get below error
 
 APPLICATION FAILED TO START
@@ -23,7 +24,7 @@ required a single bean, but 2 were found:
 	example\productserviceproject\services\MyProductService.class]
 
 
-so in springs context we have both beans available, so we need to tell spring which bean to use
+so in springs context we have both beans available, so we need to tell spring which bean to use.
 we have selfProductService and FakeStoreProductService objects.
 
 Now Product controller ask spring , hey spring please give me an object of Product Service-
@@ -60,4 +61,8 @@ our code is not dependent on any implementation.
 
 
 Similarly we can do the same for Category Service also-As Repository is dependent on Model
+
+AI Notes:-
+so we can use @Qualifier("SelfCategoryService") in Category Controller constructor to tell spring which object to give when asked for Category Service object in controller class
+
  */

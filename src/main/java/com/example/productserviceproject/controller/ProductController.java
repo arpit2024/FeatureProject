@@ -34,7 +34,7 @@ import java.util.List;
     private final CategoryRepository categoryRepository;
 
     @Autowired
-    public ProductController(@Qualifier("selfProductService")ProductService productService,
+    public ProductController(@Qualifier("fakeStoreProductService")ProductService productService,
                              CategoryRepository categoryRepository){
         this.productService=productService;
         this.categoryRepository = categoryRepository;
@@ -106,12 +106,19 @@ So (@RequestBody Product product) in this product there will be a category objec
 //For complete Update/Replacing Product we use Put
     @PutMapping("/{id}")
     public Product replaceProduct(@PathVariable("id") Long id,@RequestBody Product product){
-        return new Product();
+        //return new Product();
+        return productService.replaceproduct(id,product);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable("id") Long id){
-        productService.deleteProduct(id);
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id){
+        try{
+            productService.deleteProduct(id);
+            return ResponseEntity.ok("Product with id: "+id+" is deleted");
+        }
+        catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete product with id: "+id);
+        }
     }
 
 }
