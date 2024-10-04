@@ -7,6 +7,7 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -16,7 +17,7 @@ import java.util.Date;
 @Getter
 @Setter
 @MappedSuperclass//Explained in Error notes
-public class BaseModel {
+public class BaseModel implements Serializable {
 
     //@GeneratedValue(strategy = GenerationType.AUTO)//Explained in Error notes
     //auto increment the value of id

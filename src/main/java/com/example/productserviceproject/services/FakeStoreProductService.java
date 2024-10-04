@@ -5,6 +5,7 @@ import com.example.productserviceproject.dtos.FakeStoreProductDto;
 import com.example.productserviceproject.models.Category;
 import com.example.productserviceproject.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpMessageConverterExtractor;
@@ -23,6 +24,8 @@ public class FakeStoreProductService implements ProductService{
 
     private RestTemplate restTemplate;
 
+    private RedisTemplate<String,Object> redisTemplate;
+
 //so create a constructor of fakeStoreService for the instance/variable of type RestTemplate
 
     @Autowired
@@ -31,8 +34,9 @@ public class FakeStoreProductService implements ProductService{
 automatically  create an object of that and put it in Application Context.
 
  */
-    public FakeStoreProductService(RestTemplate restTemplate){
+    public FakeStoreProductService(RestTemplate restTemplate, RedisTemplate<String,Object> redisTemplate){
         this.restTemplate=restTemplate;
+        this.redisTemplate=redisTemplate;
     }
 /*
 For the Autowired Part-if i want to inject a bean to other class how will i do it?
@@ -77,6 +81,16 @@ so writing this method cto convert it.
     }
     @Override
     public Product getSingleProduct(Long id) throws ProductNotExistsException {
+         //so here opsForHash is a method that is used to get the hash value from the key that is stored internally
+            Product p = (Product) redisTemplate.opsForHash().get("PRODUCTS","PRODUCT_"+id);
+//It is possible that in the same redis instance we might be saving a lot of info, so think of this particular key- PRODUCTS as a table within redis
+//or each key as a separate map within the redis-> usermap,productmap,categorymap etc-> in that map find the key with this ID
+
+            if(p!=null){
+                return p;//storing p
+            }
+            //so i need to make a call, do i need to store the product of FakesStoreProductDto
+
         //Calling 3rd party API through Dto object.
         FakeStoreProductDto productDto = restTemplate.getForObject(
                 //Make a get call for below URL to get the response
@@ -92,7 +106,10 @@ so below line is trying convert the response obtained by calling the url (with F
 return the object in the form(product) that we require from the ProductDto type.
 (conversion is done by calling by convertFakeStoreProductToProduct method and Dto object is passed in it.- the method implementation details can be seen above, with explanation)
 */
-        return convertFakeStoreProductToProduct(productDto);
+        Product p1=convertFakeStoreProductToProduct(productDto);
+        redisTemplate.opsForHash().put("PRODUCTS","PRODUCT_"+id,p1);
+        //return convertFakeStoreProductToProduct(productDto);
+        return p1;
     }
 
 

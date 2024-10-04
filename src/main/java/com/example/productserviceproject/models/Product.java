@@ -3,6 +3,7 @@ package com.example.productserviceproject.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import java.io.Serializable;
 
 //@entity annotation is used to mark the class as an entity class
 //so that hibernate can recognize it as an entity class
@@ -10,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Product extends BaseModel {
+public class Product extends BaseModel implements Serializable {
 
 
     private String title;
@@ -47,3 +48,22 @@ Product : Category
 
  */
 
+/*
+public class Product extends BaseModel implements Serializable
+Internally redis is storing data in the form of bytes.so it needs to serialize the data.
+means redis needs to convert our java object into bytes.
+
+Serialization
+->It is the process of converting an object into bytes.
+->It is used to store the state of an object.
+->It is used to pass the object from one network to another network.
+->It is used to pass the object from one JVM to another JVM.
+
+So when we are storing the object in redis?
+Redis is a programming lang independent thing, so it does not know what is Product,
+it needs to convert it into bytes.
+
+->Serializable is a marker interface, it does not have any methods.
+so redis expects that whatever class we are storing should be serializable/should implement serializable interface.
+just to tell redis that this class can be converted into bytes.
+ */

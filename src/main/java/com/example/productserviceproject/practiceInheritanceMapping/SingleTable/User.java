@@ -14,6 +14,8 @@ import lombok.Setter;
  //here integer in discriminatorType means create a column of type integer called user_type with datatype as integer
 
  @DiscriminatorValue(value="0")
+    //this means that the user_type column will have value 0 for the objects of User class
+    //this is used when we have objects of only User class and not of Instructor or Mentor
 
  public class User {
      @Id

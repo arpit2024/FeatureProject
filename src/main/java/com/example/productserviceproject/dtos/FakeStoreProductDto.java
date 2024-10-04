@@ -14,9 +14,11 @@ import lombok.Setter;
 //Created to replicate data similar to api sending its Datatype)
 //we need to create this class thinking how the Api's are responding
 
-//in FakeStoreProductService we call the URL for single product we get some data(in the form of JSON)that is from FakeStore Database
+//in FakeStoreProductService we call the URL for single product we get some data(in the form of JSON)that is
+// from FakeStore Database
 //Ex:- data(JSON) like title,price,CATEGORY,Description,img
-// so in our product we don't have one like it. ex- in my product class, category is of type category. but in fakestore JSON data it is sending category of String
+// so in our product we don't have one like it. ex- in my product class, category is of type category.
+// but in fakestore JSON data it is sending category of String
 
 // So we need a Datatype that is there to talk Externally called DTO
 
